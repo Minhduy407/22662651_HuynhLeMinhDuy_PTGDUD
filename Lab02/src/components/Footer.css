@@ -1,0 +1,71 @@
+.footer {
+    background-color: #111;
+    color: white;
+    padding: 40px 0;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 0 40px;
+  }
+  
+  .footer-section h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-section ul li {
+    color: #ccc;
+    font-size: 14px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-section ul li:hover {
+    color: white;
+  }
+  
+  .subscribe-box {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .subscribe-box input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+  }
+  
+  .subscribe-box button {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  .subscribe-box button:hover {
+    background-color: #c2185b;
+  }
+  
+  .footer-bottom {
+    display: flex;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #bbb;
+  }
+  

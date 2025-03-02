@@ -1,0 +1,94 @@
+.header {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.header-logo img {
+    height: 30px;
+    margin-right: 8px;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff4081;
+}
+
+
+.header-search {
+    position: relative;
+}
+
+.header-search input {
+    width: 200px;
+    padding: 8px 10px;
+    padding-left: 30px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-60%);
+}
+
+
+.header-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.header-nav li {
+    color: #666;
+    cursor: pointer;
+}
+
+.header-nav li:hover {
+    color: black;
+}
+
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.recipe-box-btn {
+    background-color: #ffe5ec;
+    color: #ff4081;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.recipe-box-btn:hover {
+    background-color: #ffb6c1;
+}
+
+.profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #ff4081;
+}
