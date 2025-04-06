@@ -30,7 +30,7 @@ export default function Sidebar() {
       </div>
 
       <div className="bg-indigo-100 p-4 rounded-xl text-center mt-10">
-        <img src="../src/images/Group.png" alt="Upgrade" className="w-full h-24 object-cover mb-2" />
+        <img src="../src/images/Group.png" alt="Upgrade" className="w-full max-h-96 object-cover mb-2" />
         <p className="text-sm font-medium">V2.0 is available</p>
         <button className="bg-white text-indigo-600 px-4 py-1 mt-2 rounded-full text-sm font-semibold border border-indigo-600 hover:bg-indigo-50">
           Try now
