@@ -18,7 +18,7 @@ export default function Sidebar() {
           {menuItems.map((item, i) => (
             <li
               key={i}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md ${
+              className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer ${
                 item.active ? "bg-pink-100 text-pink-600 font-semibold" : "text-gray-700 hover:bg-gray-100"
               }`}
             >

@@ -89,7 +89,7 @@ const columns = [
     accessor: 'actions',
     Cell: () => (
       <button className="text-blue-500 hover:text-blue-700">
-        <FaPen className="text-xl" />
+        <FaPen className="text-xl cursor-pointer" />
       </button>
     ),
   },
