@@ -1,121 +1,123 @@
-import React from 'react';
-import { useTable, useRowSelect } from 'react-table';
+import React, { useEffect, useState } from 'react';
+import { useTable, usePagination, useRowSelect } from 'react-table';
 import { FaPen } from 'react-icons/fa';
 
-// Mock data
-const data = [
-  {
-    customerName: 'John Doe',
-    customerImage: 'src/images/Avatar.png', // Đảm bảo đường dẫn đúng
-    company: 'Company A',
-    orderValue: '$1200',
-    orderDate: '2025-04-06',
-    status: 'NEW',
-  },
-  {
-    customerName: 'Jane Smith',
-    customerImage: 'src/images/Avatar (1).png', // Đảm bảo đường dẫn đúng
-    company: 'Company B',
-    orderValue: '$900',
-    orderDate: '2025-04-05',
-    status: 'IN-PROGRESS',
-  },
-  {
-    customerName: 'Sarah Lee',
-    customerImage: 'src/images/Avatar (2).png', // Đảm bảo đường dẫn đúng
-    company: 'Company C',
-    orderValue: '$1500',
-    orderDate: '2025-04-04',
-    status: 'COMPLETED',
-  },
-];
-
-// Cấu hình các cột trong bảng
-const columns = [
-  {
-    Header: ({ getToggleAllRowsSelectedProps }) => (
-      <input type="checkbox" {...getToggleAllRowsSelectedProps()} />
-    ),
-    id: 'selection',
-    Cell: ({ row }) => (
-      <input type="checkbox" {...row.getToggleRowSelectedProps()} />
-    ),
-  },
-  {
-    Header: 'Customer Name',
-    accessor: 'customerName',
-    Cell: ({ row }) => (
-      <div className="flex items-center">
-        <img
-          src={row.original.customerImage}
-          alt={row.original.customerName}
-          className="w-8 h-8 rounded-full object-cover mr-2"
-        />
-        {row.original.customerName}
-      </div>
-    ),
-  },
-  {
-    Header: 'Company',
-    accessor: 'company',
-  },
-  {
-    Header: 'Order Value',
-    accessor: 'orderValue',
-  },
-  {
-    Header: 'Order Date',
-    accessor: 'orderDate',
-  },
-  {
-    Header: 'Status',
-    accessor: 'status',
-    Cell: ({ value }) => (
-      <span
-        className={`px-3 py-1 rounded-full text-white ${
-          value === 'NEW'
-            ? 'bg-green-500'
-            : value === 'IN-PROGRESS'
-            ? 'bg-yellow-500'
-            : 'bg-blue-500'
-        }`}
-      >
-        {value}
-      </span>
-    ),
-  },
-  {
-    Header: '',
-    accessor: 'actions',
-    Cell: () => (
-      <button className="text-blue-500 hover:text-blue-700">
-        <FaPen className="text-xl cursor-pointer" />
-      </button>
-    ),
-  },
-];
-
-// Component báo cáo
 export default function ReportTable() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://67cd2e68dd7651e464ed8f46.mockapi.io/api/v1/id')
+      .then((res) => res.json())
+      .then((json) => setData(json))
+      .catch((err) => console.error('Fetch error:', err));
+  }, []);
+
+  const columns = React.useMemo(() => [
+    {
+      Header: ({ getToggleAllPageRowsSelectedProps }) => (
+        <input type="checkbox" {...getToggleAllPageRowsSelectedProps()} />
+      ),
+      id: 'selection',
+      Cell: ({ row }) => (
+        <input type="checkbox" {...row.getToggleRowSelectedProps()} />
+      ),
+    },
+    {
+      Header: 'Customer Name',
+      accessor: 'Name',
+      Cell: ({ row }) => (
+        <div className="flex items-center">
+          <img
+            src={
+              row.original.avatar.startsWith('http')
+                ? row.original.avatar
+                : `src/images/${row.original.avatar}`
+            }
+            alt={row.original.Name}
+            className="w-8 h-8 rounded-full object-cover mr-2"
+          />
+          {row.original.Name}
+        </div>
+      ),
+    },
+    {
+      Header: 'Company',
+      accessor: 'Company',
+    },
+    {
+      Header: 'Order Value',
+      accessor: 'Ordervalue',
+    },
+    {
+      Header: 'Order Date',
+      accessor: 'date',
+    },
+    {
+      Header: 'Status',
+      accessor: 'status',
+      Cell: ({ value }) => {
+        const statusColor = {
+          new: 'bg-blue-200 text-blue-600',
+          'in-progress': 'bg-yellow-200 text-yellow-600',
+          completed: 'bg-green-200 text-green-600',
+          unqualified: 'bg-red-200 text-red-600',
+        }[value] || 'bg-gray-200 text-gray-600';
+
+        return (
+          <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusColor}`}>
+            {value.charAt(0).toUpperCase() + value.slice(1)}
+          </span>
+        );
+      },
+    },
+    {
+      Header: '',
+      accessor: 'actions',
+      Cell: () => (
+        <button className="text-gray-500 hover:text-gray-800">
+          <FaPen className="text-lg cursor-pointer" />
+        </button>
+      ),
+    },
+  ], []);
+
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
     prepareRow,
-    state: { selectedRowIds },
-    getToggleAllRowsSelectedProps,
+    page,
+    canPreviousPage,
+    canNextPage,
+    nextPage,
+    previousPage,
+    pageCount,
+    gotoPage,
+    state: { pageIndex },
   } = useTable(
     {
       columns,
       data,
+      initialState: { pageIndex: 0, pageSize: 6 },
     },
+    usePagination,
     useRowSelect
   );
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h3 className="text-xl font-semibold text-gray-700 mb-4">Project Report</h3>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-semibold text-gray-700">Detailed report</h3>
+        <div className="space-x-2">
+          <button className="border px-4 py-1 rounded text-pink-600 border-pink-300 hover:bg-pink-100">
+            ⬇️ Export
+          </button>
+          <button className="border px-4 py-1 rounded text-pink-600 border-pink-300 hover:bg-pink-100">
+            ⬆️ Import
+          </button>
+        </div>
+      </div>
+
       <table {...getTableProps()} className="w-full table-auto border-collapse">
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -123,7 +125,7 @@ export default function ReportTable() {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
-                  className="py-2 px-4 text-left bg-gray-100"
+                  className="py-2 px-4 text-left bg-gray-100 font-medium text-sm text-gray-600"
                 >
                   {column.render('Header')}
                 </th>
@@ -132,12 +134,12 @@ export default function ReportTable() {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
+          {page.map((row) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} className="border-b">
+              <tr {...row.getRowProps()} className="border-b hover:bg-gray-50">
                 {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} className="py-2 px-4">
+                  <td {...cell.getCellProps()} className="py-2 px-4 text-sm text-gray-700">
                     {cell.render('Cell')}
                   </td>
                 ))}
@@ -146,7 +148,42 @@ export default function ReportTable() {
           })}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className="flex items-center justify-between mt-4">
+        <span className="text-sm text-gray-600">
+          {data.length} results
+        </span>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+            className="px-3 py-1 rounded-full border border-gray-300 text-sm disabled:opacity-40"
+          >
+            ◀
+          </button>
+          {[...Array(pageCount)].map((_, i) => (
+            <button
+              key={i}
+              onClick={() => gotoPage(i)}
+              className={`px-3 py-1 rounded-full border text-sm ${
+                pageIndex === i
+                  ? 'bg-pink-500 text-white border-pink-500'
+                  : 'border-gray-300 text-gray-600'
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+            className="px-3 py-1 rounded-full border border-gray-300 text-sm disabled:opacity-40"
+          >
+            ▶
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
-    
