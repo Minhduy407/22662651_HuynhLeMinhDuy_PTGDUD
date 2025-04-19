@@ -1,7 +1,8 @@
+import React, { useState } from "react";
 import { FaTh, FaProjectDiagram, FaUsers, FaChartBar, FaEnvelope, FaPlug } from "react-icons/fa";
 
 const menuItems = [
-  { name: "Dashboard", icon: <FaTh />, active: true },
+  { name: "Dashboard", icon: <FaTh /> },
   { name: "Projects", icon: <FaProjectDiagram /> },
   { name: "Teams", icon: <FaUsers /> },
   { name: "Analytics", icon: <FaChartBar /> },
@@ -9,7 +10,16 @@ const menuItems = [
   { name: "Integrations", icon: <FaPlug /> },
 ];
 
-export default function Sidebar() {
+export default function SlideBar({ onMenuItemClick }) {
+  const [selectedItem, setSelectedItem] = useState("Dashboard"); // Mặc định là "Dashboard"
+
+  const handleClick = (itemName) => {
+    setSelectedItem(itemName); // Cập nhật item được chọn
+    if (onMenuItemClick) {
+      onMenuItemClick(itemName); // Gọi hàm onMenuItemClick từ parent
+    }
+  };
+
   return (
     <div className="w-64 bg-white border-r p-4 flex flex-col justify-between">
       <div>
@@ -18,8 +28,11 @@ export default function Sidebar() {
           {menuItems.map((item, i) => (
             <li
               key={i}
+              onClick={() => handleClick(item.name)} // Cập nhật và thông báo cho parent khi chọn
               className={`flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer ${
-                item.active ? "bg-pink-100 text-pink-600 font-semibold" : "text-gray-700 hover:bg-gray-100"
+                selectedItem === item.name
+                  ? "bg-pink-100 text-pink-600 font-semibold" // Màu hồng khi được chọn
+                  : "text-gray-700 hover:bg-gray-100"
               }`}
             >
               {item.icon}
