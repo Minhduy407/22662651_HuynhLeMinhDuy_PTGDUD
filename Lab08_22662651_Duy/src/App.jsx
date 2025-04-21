@@ -9,6 +9,7 @@ import CartApp from './components/CartApp'
 import AuthApp from './components/AuthApp'
 
 import UserApp from './components/UserApp'
+import AdvancedCounter from './components/AdvancedCounter'
 
 function App() {
   const theme = useSelector(state => state.theme.theme)
@@ -29,6 +30,7 @@ function App() {
       <CartApp />
       <AuthApp />
       <UserApp />
+      <AdvancedCounter />
     </div>
   )
 }
