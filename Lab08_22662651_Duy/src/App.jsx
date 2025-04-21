@@ -10,6 +10,7 @@ import AuthApp from './components/AuthApp'
 
 import UserApp from './components/UserApp'
 import AdvancedCounter from './components/AdvancedCounter'
+import BmiForm from './components/BmiForm'
 
 function App() {
   const theme = useSelector(state => state.theme.theme)
@@ -31,6 +32,7 @@ function App() {
       <AuthApp />
       <UserApp />
       <AdvancedCounter />
+      <BmiForm />
     </div>
   )
 }
