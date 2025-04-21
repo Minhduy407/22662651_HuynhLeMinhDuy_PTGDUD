@@ -12,31 +12,40 @@ import UserApp from './components/UserApp'
 import AdvancedCounter from './components/AdvancedCounter'
 import BmiForm from './components/BmiForm'
 import EventManager from './components/EventManager'
+import { Provider } from 'react-redux';
+import { store } from './app/store';
+import Dashboard from './components/DashBoard';
 
 function App() {
-  const theme = useSelector(state => state.theme.theme)
-  const dispatch = useDispatch()
-
   return (
-    <div className={`min-h-screen p-4 transition-all duration-300 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
-      <button
-        onClick={() => dispatch(toggleTheme())}
-        className="mb-4 px-4 py-2 rounded bg-blue-500 text-white"
-      >
-        Toggle Theme
-      </button>
+    <Provider store={store}>
+      <Dashboard />
+    </Provider>
+  );
+  // const theme = useSelector(state => state.theme.theme)
+  // const dispatch = useDispatch()
 
-      <CounterReducer />
-      <CounterRedux />
-      <TodoApp />
-      <CartApp />
-      <AuthApp />
-      <UserApp />
-      <AdvancedCounter />
-      <BmiForm />
-      <EventManager/>
-    </div>
-  )
+  // return (
+  //   <div className={`min-h-screen p-4 transition-all duration-300 ${theme === "dark" ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
+  //     <button
+  //       onClick={() => dispatch(toggleTheme())}
+  //       className="mb-4 px-4 py-2 rounded bg-blue-500 text-white"
+  //     >
+  //       Toggle Theme
+  //     </button>
+
+  //     <CounterReducer />
+  //     <CounterRedux />
+  //     <TodoApp />
+  //     <CartApp />
+  //     <AuthApp />
+  //     <UserApp />
+  //     <AdvancedCounter />
+  //     <BmiForm />
+  //     <EventManager/>
+  //   </div>
+
+  // )
 }
 
 export default App
