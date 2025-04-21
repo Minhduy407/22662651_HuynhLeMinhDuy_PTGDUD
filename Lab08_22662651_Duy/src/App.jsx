@@ -8,6 +8,8 @@ import './index.css'
 import CartApp from './components/CartApp'
 import AuthApp from './components/AuthApp'
 
+import UserApp from './components/UserApp'
+
 function App() {
   const theme = useSelector(state => state.theme.theme)
   const dispatch = useDispatch()
@@ -26,6 +28,7 @@ function App() {
       <TodoApp />
       <CartApp />
       <AuthApp />
+      <UserApp />
     </div>
   )
 }
