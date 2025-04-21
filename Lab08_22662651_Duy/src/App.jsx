@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from './features/theme/themeSlice'
 import './index.css'
 import CartApp from './components/CartApp'
+import AuthApp from './components/AuthApp'
 
 function App() {
   const theme = useSelector(state => state.theme.theme)
@@ -24,6 +25,7 @@ function App() {
       <CounterRedux />
       <TodoApp />
       <CartApp />
+      <AuthApp />
     </div>
   )
 }
