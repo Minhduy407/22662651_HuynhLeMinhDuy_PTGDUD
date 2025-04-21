@@ -1,6 +1,7 @@
 
 import './App.css'
 import CounterReducer from './components/CounterReducer'
+import CounterRedux from './components/CounterRedux'
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <CounterReducer />
+      <CounterRedux />
     </>
   )
 }
